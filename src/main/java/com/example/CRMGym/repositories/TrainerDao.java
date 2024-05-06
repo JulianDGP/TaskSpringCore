@@ -16,7 +16,7 @@ public class TrainerDao {
         this.storage =storage;
     }
 
-    public Trainer save(Trainer trainer){
+    public Trainer save(Trainer trainer)throws IllegalArgumentException{
         if (trainer.getId() ==null || storage.containsKey(trainer.getId())){
             throw new IllegalArgumentException("Trainer must have a unique ID or ID is already in use.");
         }
@@ -36,7 +36,8 @@ public class TrainerDao {
             throw new IllegalArgumentException("Cannot update non-existing trainer.");
         }
         trainer.setId(id);  // Asegura que el ID no cambie.
-        return storage.replace(id, trainer);
+        storage.replace(id, trainer);
+        return trainer;
     }
 
 //    public Trainer delete(Long id) {

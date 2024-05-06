@@ -17,7 +17,7 @@ public class TrainingDao {
         this.storage =storage;
     }
 
-    public Training save(Training training){
+    public Training save(Training training)throws IllegalArgumentException{
         if (training.getId() == null || storage.containsKey(training.getId())) {
             throw new IllegalArgumentException("Training must have a unique ID or ID is already in use.");
         }

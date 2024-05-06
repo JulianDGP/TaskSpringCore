@@ -1,6 +1,9 @@
 package com.example.CRMGym.repositories;
 
 import com.example.CRMGym.models.Trainee;
+import com.example.CRMGym.services.TraineeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +13,7 @@ import java.util.Map;
 @Repository
 public class TraineeDao {
 
+    private static final Logger log = LoggerFactory.getLogger(TraineeService.class);
     private final Map<Long, Trainee> storage;
 
     @Autowired
@@ -17,12 +21,11 @@ public class TraineeDao {
         this.storage =storage;
     }
 
-    public Trainee save(Trainee trainee){
+    public Trainee save(Trainee trainee) throws IllegalArgumentException{
 
         if (trainee.getId() == null || storage.containsKey(trainee.getId())) {
             throw new IllegalArgumentException("Trainee must have a unique ID or ID is already in use.");
         }
-
         storage.put(trainee.getId(), trainee);
         return trainee;
     }
@@ -42,13 +45,18 @@ public class TraineeDao {
             throw new IllegalArgumentException("Cannot update non-existing trainee.");
         }
         trainee.setId(id);  // Asegura que el ID no cambie.
-        return storage.replace(id, trainee);
+        storage.replace(id, trainee);
+        return trainee;
     }
 
-    public Trainee delete(Long id) {
+    public boolean delete(Long id) {
         if (!storage.containsKey(id)) {
-            throw new IllegalArgumentException("Cannot delete non-existing trainee.");
+            log.warn("Attempt to delete non-existing trainee with ID: {}", id);
+            return false;
         }
-        return storage.remove(id);
+        storage.remove(id);
+        log.info("Trainee deleted successfully with ID: {}", id);
+        return true;
     }
+
 }

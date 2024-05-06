@@ -8,6 +8,9 @@ public class Trainee extends User{
     private LocalDate dateOfBirth;
     private String address;
 
+    public Trainee() {
+    }
+
     public Trainee(Long id, String firstName, String lastName, String username, String password, boolean isActive, LocalDate dateOfBirth, String address) {
         super(id, firstName, lastName, username, password, isActive);
         this.dateOfBirth = dateOfBirth;
