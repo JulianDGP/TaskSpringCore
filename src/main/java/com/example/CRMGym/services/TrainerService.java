@@ -81,6 +81,5 @@ public class TrainerService {
         if (trainer.getLastName() == null || trainer.getLastName().isEmpty()) {
             throw new IllegalArgumentException("Last name is required.");
         }
-        // Additional validations can be added here based on requirements
     }
 }

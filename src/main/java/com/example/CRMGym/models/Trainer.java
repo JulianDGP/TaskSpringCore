@@ -8,7 +8,11 @@ package com.example.CRMGym.models;
             this.specialization = specialization;
         }
 
-    public String getSpecialization() {
+        public Trainer() {
+
+        }
+
+        public String getSpecialization() {
         return specialization;
     }
 
